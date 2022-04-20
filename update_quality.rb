@@ -2,6 +2,32 @@ require_relative 'award.rb'
 
 def update_quality(awards)
   awards.each do |award|
+
+    case award.name
+    when 'Blue Distinction Plus'
+      award.quality = 80
+      # Expiration, degradation logic not required
+
+    when 'Blue First'
+      if award.quality < 50
+        award.quality += 1
+      end
+    
+    when 'Blue Compare'
+      case award.expires_in
+      when award.expires_in > 10
+        award.quality += 0
+      when award.expires_in <= 10
+        award.quality += 2
+      when award.expires_in <= 5
+        award.quality += 3
+      when award.expires_in = 0
+        award.quality = award.quality - award.quality
+        # Logic to decrement twice as fast not required
+        # since it's getting zeroed anyway.
+
+    when 'Blue Star'
+
     if award.name != 'Blue First' && award.name != 'Blue Compare'
       if award.quality > 0
         if award.name != 'Blue Distinction Plus' && award.name != 'Blue Star'
